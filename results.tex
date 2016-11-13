@@ -1,6 +1,51 @@
 %!TEX root = stoh_modeling.tex
 \section{Результаты}
-\subsection{Процесс моделирования}
+\subsection{Описание реакций}
+Опишем реакции для одного ядра (для остальных ядер аналогично). Для каждого сайта присоединения реакции присоединения и отсоединения будут
+иметь одинаковый вид. Основным отличием будет какой именно ТФ присоединяется/отсоединяется. Для активаторов (в нашей работе это \textbf{cad}
+или \textbf{bcd}) реакции примут следующий вид:
+\begin{align*}
+N^{unbinded}   \xrightarrow{C_i \cdot N^{unbinded}} & N^{binded} + A\\
+N^{binded} + A \xrightarrow{C_i \cdot N^{binded}}  & N^{unbinded}
+\end{align*}
+
+Для репрессоров реакции будут выглядеть так:
+
+\begin{align*}
+N^{unbinded}   & \xrightarrow{C_i \cdot N^{unbinded}} N^{binded} + R\\
+N^{binded} + R &  \xrightarrow{C_i \cdot N^{binded}}  N^{unbinded}
+\end{align*}
+где $C_i$ - коэффициент присоединения к $i$-ому сайту, $R$ - количество репрессоров и $A$ - количество активаторов.
+
+Теперь запишем реакции транскрипции и трансляции:
+
+\begin{align*}
+\varnothing \xrightarrow{p_{\lambda} \cdot p_{\alpha}^{A} \cdot p_{\beta}^{R}} mRNA \\
+mRNA \xrightarrow{p_{\gamma} \cdot mRNA} N^{unbinded} \\
+\end{align*}
+
+где $p_{\lambda}$, $p_{\alpha}$, $p_{\beta}$, $p_{\gamma}$ - коэффициенты транскрипции, активации, регрессии и трансляции соотвественно.
+
+Реакции деградации:
+
+\begin{align*}
+mRNA \xrightarrow{p_{\theta} \cdot mRNA} \varnothing \\
+N^{unbinded} \xrightarrow{p_{\phi} \cdot N^{unbinded}} \varnothing \\
+\end{align*}
+где $p_{\theta}$, $p_{\phi}$ - коэффициенты деградации мРНК и белка соотвественно.
+
+Так же нужно учесть диффузию - перетекание белка в соседние ядра:
+
+\begin{align*}
+N_i   \xrightarrow{p_{\xi} \cdot max(N_i - N_{i+1}, 0)} & N_{i+1} \\
+N_i   \xrightarrow{p_{\xi} \cdot max(N_i - N_{i-1}, 0)} & N_{i-1}
+\end{align*}
+где $p_{\xi}$ - параметр диффузии, $i$ - номер ядра.
+В результате наша модель имеет 7 параметров - $p_{\lambda}$, $p_{\alpha}$, $p_{\beta}$, $p_{\gamma}$, $p_{\theta}$, $p_{\phi}$, $p_{\xi}$.
+
+
+\subsection{Разработка программного обеспечения}
+
 \subsection{Экспериментальные расчёты}
 \begin{figure}[h]
  	\center{\includegraphics[width=1\linewidth]{kni}}
@@ -8,3 +53,5 @@
 \begin{figure}[h]
  	\center{\includegraphics[width=1\linewidth]{rna}}
 \end{figure}
+
+\subsection{Выводы}
